@@ -41,8 +41,8 @@ The script will create the `data` folder and import the data there. The script w
 ```
 plantLOT/
 ├── data/                   # must be downloaded (see section above)
-│   ├── maize/              # data for a particular maize plant over 12 days
-│   ├── tomato/             # data for a particular tomato plant over 20 days
+│   ├── maize01/              # data for a particular maize plant over 12 days
+│   ├── tomato01/             # data for a particular tomato plant over 20 days
 |   ...
 ├── scripts/                # one time use scripts (e.g. downloading data)
 ├── utils/                  # [TODO] helper functions used throughout the repo
