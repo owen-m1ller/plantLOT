@@ -20,6 +20,8 @@ print(
     """
 )
 
+DATA_DIR.mkdir(exist_ok=True)
+
 with open(DATA_DIR / "data.zip", "wb") as file:
     for chunk in response.iter_content(chunk_size=8192):
         if chunk:
