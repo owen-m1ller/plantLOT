@@ -9,7 +9,7 @@ load_dotenv(REPO_ROOT / '.env')
 
 DATA_DIR = (REPO_ROOT / os.getenv("DATA_DIR")).resolve()
 
-url = "https://www.ipb.uni-bonn.de/html/projects/Pheno4D/Pheno4D.zip"
+url = os.getenv("DATA_URL")
 
 response = requests.get(url, stream=True)
 
@@ -30,9 +30,11 @@ with zipfile.ZipFile(DATA_DIR / 'data.zip', 'r') as zip_file:
 
 os.remove(DATA_DIR / "data.zip")
 
-for item in (DATA_DIR / "Pheno4D").iterdir():
+DATA_DWNLD_DIRNAME = os.getenv("DATA_DWNLD_DIRNAME")
+
+for item in (DATA_DIR / DATA_DWNLD_DIRNAME).iterdir():
     new_loc = DATA_DIR / item.name
     os.rename(item, new_loc)
 
-os.rmdir(DATA_DIR / "Pheno4D")
+os.rmdir(DATA_DIR / DATA_DWNLD_DIRNAME)
 
