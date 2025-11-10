@@ -45,6 +45,8 @@ plantLOT/
 │   ├── tomato01/             # data for a particular tomato plant over 20 days
 |   ...
 ├── scripts/                # one time use scripts (e.g. downloading data)
+│   └── download_data.py    # download the data from online URL
+│   └── compute_w2s.py      # experimental script for finding Wasserstein_2 dist between 2 point clouds
 ├── utils/                  # [TODO] helper functions used throughout the repo
 │   └── pointcloud_utils.py # Functions for loading and processing the point clouds (e.g. downsampling)
 │   └── visualization.py    # For visualizing clouds or growth trajectories
