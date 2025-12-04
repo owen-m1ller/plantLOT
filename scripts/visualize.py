@@ -11,6 +11,7 @@ load_dotenv(REPO_ROOT / '.env')
 DATA_DIR = (REPO_ROOT / os.getenv("DATA_DIR")).resolve()
 
 pcd_xyz = np.loadtxt(DATA_DIR / sys.argv[1], delimiter=" ")
+print(pcd_xyz.shape)
 pcd = o3d.geometry.PointCloud()
 pcd.points = o3d.utility.Vector3dVector(pcd_xyz)
 o3d.visualization.draw_geometries([pcd])

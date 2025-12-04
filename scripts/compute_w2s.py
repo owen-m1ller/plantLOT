@@ -1,17 +1,19 @@
 import numpy as np
 import ot
+import open3d as o3d
+import sys
+from utils import bary_proj
 
-day2 = np.loadtxt("../data/Tomato01/T01_0306.txt")[::100] # downsample
-day4 = np.loadtxt("../data/Tomato01/T01_0308.txt")[::100]
+cloud_1_f = sys.argv[1] # input the file path of the first point cloud
+cloud_2_f = sys.argv[2] # input the file path of the second point cloud
 
-print(day4.shape)
-print(day2.shape)
+output = bary_proj(cloud_1_f, cloud_2_f)
 
-unif_day2 = np.ones(day2.shape[0]) / day2.shape[0]
-unif_day4 = np.ones(day4.shape[0]) / day4.shape[0]
+folder = '/'.join(cloud_1_f.split('/')[:-1])
+cloud_1_fname = cloud_1_f.split('/')[-1].replace('.ply', '')
+cloud_2_fname = cloud_2_f.split('/')[-1].replace('.ply', '')
 
-cost = ot.dist(day2, day4, metric='euclidean') ** 2
+outputf = f'{folder}/{cloud_1_fname}-{cloud_2_fname}-bary.ply'
 
-w2_sinkhorn = np.sqrt(ot.emd2(unif_day2, unif_day4, cost))
+o3d.io.write_point_cloud(outputf, output)
 
-print(w2_sinkhorn)
