@@ -113,6 +113,7 @@ plantLOT/
 ├── data/                   # must be downloaded (see section above)
 │   ├── maize01/            # data for a particular maize plant over 12 days
 │   ├── tomato01/           # data for a particular tomato plant over 20 days
+├── data/                   # processed data (voxel-downsampled and floor removed)
 |   ...
 ├── scripts/                # scripts to faciliate optimal transport work within the command line
 │   └── download_data.py    # download the data from online URL
