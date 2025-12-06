@@ -1,62 +1,3 @@
-# Installation
-
-## Dependencies
-Dependencies are managed through [Pixi](https://pixi.sh/latest/) and listed in the `pixi.lock` file. Instructions for downloading Pixi are provided in the [Pixi documentation](https://pixi.sh/latest/installation/) and replicated below:
-
-### Mac / Linux
-
-Run the following command to install Pixi
-
-```
-curl -fsSL https://pixi.sh/install.sh | sh
-```
-and run
-
-```
-pixi install
-```
-to install the project dependencies.
-
-### Windows
-
-Download through [the installer](https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-pc-windows-msvc.msi), making sure to select the option to add Pixi to your path.
-
-Run
-```
-pixi install
-```
-to install the project dependencies.
-
-## Downloading The Data
-
-This project uses the Pheno4D dataset curated by researchers at the University of Bonn, Germany. It includes point cloud representations of the surfaces of 7 maize plants and 7 tomato plants that were scanned with a LiDAR scanner over 12 and 20 days, respectively. For a citation and more information about the dataset, see their [paper](https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0256340&type=printable).
-
-To download the dataset, from the root directory of the repo, run
-```
-pixi run python scripts/download_data.py
-```
-The script will create the `data` folder and import the data there. The script will take time to download and unzip the data. Please wait for it to complete running before trying to work with the data.
-
-# Repo Structure
-```
-plantLOT/
-├── data/                   # must be downloaded (see section above)
-│   ├── maize01/              # data for a particular maize plant over 12 days
-│   ├── tomato01/             # data for a particular tomato plant over 20 days
-|   ...
-├── scripts/                # one time use scripts (e.g. downloading data)
-│   └── download_data.py    # download the data from online URL
-│   └── compute_w2s.py      # experimental script for finding Wasserstein_2 dist between 2 point clouds
-├── utils/                  # [TODO] helper functions used throughout the repo
-│   └── pointcloud_utils.py # Functions for loading and processing the point clouds (e.g. downsampling)
-│   └── visualization.py    # For visualizing clouds or growth trajectories
-├── models/                 # [TODO] store weights for trained model (e.g. for an SVM we can benchmark optimal transport against)
-├── README.md               # Project documentation [you are here :)]
-└── pixi.toml               # dependencies
-└── pixi.lock               # list of ALL dependencies and their dependencies. Complete declaration of environment
-└── .env                    # environment variables
-```
-
 # Using Linear optimal transport to model plant growth
 This Github repository is a replication of the paper [_Registration of spatio-temporal point clouds of plants for 
 phenotyping_](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0247243) by Chebrolu et al. 
@@ -125,3 +66,69 @@ Our quarter 1 project does not closely replicate the referenced 4d-plant registr
 - [ ] Take one plant. Use its point cloud on the first day as a reference measure. Linearly interpolate between the point clouds and couplings found using linear optimal transport to create a smooth video of plant growth.
 - [ ] Repeat the previous process using a more carefully chosen reference measure. Compare results
 - [ ] Train a classifier to predict either Maize or Tomato based on a plants growth trajectory. Compare its effectiveness to models that predict species based on only a single point cloud on a given day (perhaps use an SVM or neural network for the second model).
+
+
+# Installation
+
+## Dependencies
+Dependencies are managed through [Pixi](https://pixi.sh/latest/) and listed in the `pixi.lock` file. Instructions for downloading Pixi are provided in the [Pixi documentation](https://pixi.sh/latest/installation/) and replicated below:
+
+### Mac / Linux
+
+Run the following command to install Pixi
+
+```
+curl -fsSL https://pixi.sh/install.sh | sh
+```
+and run
+
+```
+pixi install
+```
+to install the project dependencies.
+
+### Windows
+
+Download through [the installer](https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-pc-windows-msvc.msi), making sure to select the option to add Pixi to your path.
+
+Run
+```
+pixi install
+```
+to install the project dependencies.
+
+## Downloading The Data
+
+This project uses the Pheno4D dataset curated by researchers at the University of Bonn, Germany. It includes point cloud representations of the surfaces of 7 maize plants and 7 tomato plants that were scanned with a LiDAR scanner over 12 and 20 days, respectively. For a citation and more information about the dataset, see their [paper](https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0256340&type=printable).
+
+To download the dataset, from the root directory of the repo, run
+```
+pixi run python scripts/download_data.py
+```
+The script will create the `data` folder and import the data there. The script will take time to download and unzip the data. Please wait for it to complete running before trying to work with the data.
+
+# Repo Structure
+```
+plantLOT/
+├── data/                   # must be downloaded (see section above)
+│   ├── maize01/            # data for a particular maize plant over 12 days
+│   ├── tomato01/           # data for a particular tomato plant over 20 days
+|   ...
+├── scripts/                # scripts to faciliate optimal transport work within the command line
+│   └── download_data.py    # download the data from online URL
+│   └── compute_w2s.py      # experimental script for finding Wasserstein_2 dist between 2 point clouds
+│   └── interpolate.py      # create frames for animating an interpolation between two point clouds (barycentric embedding)
+│   └── utils.py            # contains helper functions useful across many scripts
+│   └── voxel-downsample.py # perform voxel downsampling on a given txt or ply file
+│   └── data_processing.py  # remove the floor below plants using DBSCAN
+│   ...                     # many more command line tools
+├── plant_MotioNet/         # [TODO] helper functions used throughout the repo
+│   └── train.py            # Train MotioNet benchmark
+│   ├── data                # Data directory containing voxel-downsampled data for the NN training
+│   └── ...                 # Files relating to the creation and training of the neural network
+├── render/                 # Stores animation frames after interpolate.py or LOT_prediction.py is called
+├── README.md               # Project documentation [you are here :)]
+└── pixi.toml               # dependencies
+└── pixi.lock               # list of ALL dependencies and their dependencies. Complete declaration of environment
+└── .env                    # environment variables
+```
